@@ -1,0 +1,61 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>QR Image Embedder</title>
+</head>
+<body>
+    <h1>QR Image Embedder</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>QR Code Image:</label>
+        <input type="file" name="qr" accept="image/*" required><br><br>
+
+        <label>Image to Embed:</label>
+        <input type="file" name="image" accept="image/*" required><br><br>
+
+        <label>Random Seed (optional):</label>
+        <input type="text" name="seed"><br><br> -->
+
+        <!-- Optional: Blend percentage -->
+        <!-- <label>Blending Percentage (future use):</label>
+        <input type="range" name="blend" min="0" max="100" value="50"><br><br>
+
+        <button type="submit">Create Modified QR</button>
+    </form>
+
+    {% if image_generated %}
+        <h2>Modified QR Code:</h2>
+        <img src="{{ url_for('static', filename='output.png') }}" alt="Modified QR" width="300"><br><br>
+        <a href="{{ url_for('download') }}"><button>Download QR</button></a>
+    {% endif %}
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Embedder</title>
+</head>
+<body>
+  <h2>Upload QR Code and Image to Embed</h2>
+  <form method="post" enctype="multipart/form-data">
+    <label>QR Code Image:</label><input type="file" name="qr" required><br><br>
+    <label>Image to Embed:</label><input type="file" name="embed" required><br><br>
+
+    <label>Blending Percentage (0-100):</label>
+    <input type="range" name="blendpercent" min="0" max="100" value="30" oninput="this.nextElementSibling.value = this.value">
+    <output>30</output><br><br>
+
+    <label>Random String (optional):</label>
+    <!-- <input type="number" name="random_seed" value="-1" required><br><br> -->
+    <input type="text" name="randomseed"><br><br>
+
+    <input type="submit" value="Embed Image" style="display: block; margin: 50px auto; padding: 20px 40px; font-size: 24px; width: 250px;">
+  </form>
+  {% if image_url %}
+        <h2>Result</h2>
+        <img src="{{ image_url }}" width="300"><br>
+        <a href="/download">Download Enhanced QR</a>
+    {% endif %}
+</body>
+</html>
+

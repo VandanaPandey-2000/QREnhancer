@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><title>Result</title></head>
+<body>
+  <h2>Enhanced QR Code</h2>
+  <img src="{{ url_for('static', filename=result_image.split('static/')[-1]) }}" alt="Modified QR"><br><br>
+  <a href="{{ url_for('static', filename=result_image.split('static/')[-1]) }}" download>Download Modified QR</a>
+</body>
+</html>
