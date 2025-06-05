@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, session
 import os
 import subprocess
 from werkzeug.utils import secure_filename
@@ -16,6 +16,16 @@ os.makedirs(STATIC_FOLDER, exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Clear previous output file on GET request (page refresh/load)
+    if request.method == 'GET':
+        output_path = os.path.join(STATIC_FOLDER, 'output1.png')
+        if os.path.exists(output_path):
+            try:
+                os.remove(output_path)
+            except Exception as e:
+                print(f"Error removing old file: {e}")
+
+    
     print("DEBUG: Request received, method =", request.method)  
     if request.method == 'POST':
         print("a")
@@ -83,7 +93,12 @@ def index():
 
 @app.route('/download')
 def download():
-    return send_file('static/output1.png', as_attachment=True)
+    output_path = os.path.join(STATIC_FOLDER, 'output1.png')
+    if os.path.exists(output_path):
+        return send_file(output_path, as_attachment=True)
+    else:
+        return "No QR code generated yet", 404
+    # return send_file('static/output1.png', as_attachment=True)
     
 
 if __name__ == '__main__':
