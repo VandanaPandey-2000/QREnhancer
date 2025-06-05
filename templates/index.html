@@ -1,35 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>QR Image Embedder</title>
-</head>
-<body>
-    <h1>QR Image Embedder</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label>QR Code Image:</label>
-        <input type="file" name="qr" accept="image/*" required><br><br>
-
-        <label>Image to Embed:</label>
-        <input type="file" name="image" accept="image/*" required><br><br>
-
-        <label>Random Seed (optional):</label>
-        <input type="text" name="seed"><br><br> -->
-
-        <!-- Optional: Blend percentage -->
-        <!-- <label>Blending Percentage (future use):</label>
-        <input type="range" name="blend" min="0" max="100" value="50"><br><br>
-
-        <button type="submit">Create Modified QR</button>
-    </form>
-
-    {% if image_generated %}
-        <h2>Modified QR Code:</h2>
-        <img src="{{ url_for('static', filename='output.png') }}" alt="Modified QR" width="300"><br><br>
-        <a href="{{ url_for('download') }}"><button>Download QR</button></a>
-    {% endif %}
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,13 +81,13 @@
     </div>
 
     <div>
-      <label for="blend" class="slider-label">Blend Percentage: <span id="blend-value">30</span>%</label><br>
-      <input type="range" name="blend" id="blend" min="0" max="100" value="30" oninput="updateBlendValue(this.value)">
-    </div>
-
-    <div>
       <label for="seed">Seed (optional):</label><br>
       <input type="text" name="seed" id="seed" placeholder="Enter a seed value">
+    </div>
+      
+    <div>
+      <label for="blend" class="slider-label">Blend Percentage: <span id="blend-value">30</span>%</label><br>
+      <input type="range" name="blend" id="blend" min="0" max="100" value="30" oninput="updateBlendValue(this.value)">
     </div>
 
     <button type="submit">Generate</button>
