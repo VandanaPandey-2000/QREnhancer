@@ -138,10 +138,12 @@ def blend_edges_with_qr(qr_img, embed_img, x, y, module_size, blend_percent):
         alpha = embed[:, :, 3] / 255.0
         for c in range(3):
             # C++-style blending with target_color
-            roi[:, :, c] = blend_mask * alpha * embed[:, :, c] + (1 - blend_mask * alpha) * target_color[c]
+            # roi[:, :, c] = blend_mask * alpha * embed[:, :, c] + (1 - blend_mask * alpha) * target_color[c]
+            roi[:, :, c] = ((1 - blend_mask) * alpha * embed[:, :, c] + blend_mask * target_color[c])
     else:
         for c in range(3):
-            roi[:, :, c] = blend_mask * embed[:, :, c] + (1 - blend_mask) * target_color[c]
+            # roi[:, :, c] = blend_mask * embed[:, :, c] + (1 - blend_mask) * target_color[c]
+            roi[:, :, c] = ((1 - blend_mask) * embed[:, :, c] + blend_mask * target_color[c])
 
     qr_img[y:y+h, x:x+w] = np.clip(roi, 0, 255).astype(np.uint8)
 
