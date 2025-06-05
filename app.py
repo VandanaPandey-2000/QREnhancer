@@ -18,7 +18,7 @@ def index():
         qr_file = request.files.get('qr')
         embed_file = request.files.get('embed')
 
-         if not qr_file or not embed_file:
+        if not qr_file or not embed_file:
             return "Both QR and image to embed are required", 400
              
         try:                                        #edited: added try except
