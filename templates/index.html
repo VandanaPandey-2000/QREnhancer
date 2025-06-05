@@ -55,6 +55,27 @@
       cursor: pointer;
     }
 
+    .download-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+
+    .download-button:hover {
+    background-color: #45a049;
+    }
+    
+    .result-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
     button:hover {
       background-color: #99004d;
     }
@@ -103,7 +124,12 @@
   {% if image_url %}
     <div class="result-image">
         <img src="{{ image_url }}" alt="Processed Image">
-        <a href="{{ image_url }}" download>Download Image</a>
+<!--         <a href="{{ image_url }}" download>Download Image</a> -->
+         <form action="/download/{{ output_filename }}" method="get">
+          <button type="submit" class="download-button">
+            <i class="fas fa-download"></i> Download QR Code
+          </button>
+    </form>
     </div>
   {% endif %}
     
