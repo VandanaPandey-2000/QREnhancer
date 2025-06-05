@@ -52,9 +52,9 @@
 <body>
   <h1>QR Code with Embedded Image</h1>
   <div class="result-container">
-    <img src="{{ url_for('static', filename=output_path) }}" alt="Result Image">
+    <img src="{{ url_for('static', filename=output.png) }}" alt="Result Image">
     <br>
-    <a href="{{ url_for('static', filename=output_path) }}" download class="download-btn">Download Embedded QR</a>
+    <a href="{{ url_for('static', filename=output.png) }}" download class="download-btn">Download Embedded QR</a>
   </div>
 </body>
 </html>
