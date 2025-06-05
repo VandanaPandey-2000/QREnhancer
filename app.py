@@ -37,11 +37,16 @@ def index():
 
         print(f"DEBUG: blend_percent={blend_percent}, random_seed='{random_seed}'") #edited: added line
 
-       
-
-        qr_filename = secure_filename(qr_file.filename)
-        embed_filename = secure_filename(embed_file.filename)
+        import uuid
+        unique_id = str(uuid.uuid4())[:8]
+        qr_filename = f"qr_{unique_id}_{secure_filename(qr_file.filename)}"
+        embed_filename = f"embed_{unique_id}_{secure_filename(embed_file.filename)}"
+        output_filename = f"output_{unique_id}.png"
         print("f")
+
+        # qr_filename = secure_filename(qr_file.filename)
+        # embed_filename = secure_filename(embed_file.filename)
+        # print("f")
 
         qr_path = os.path.join(app.config['UPLOAD_FOLDER'], qr_filename)
         embed_path = os.path.join(app.config['UPLOAD_FOLDER'], embed_filename)
