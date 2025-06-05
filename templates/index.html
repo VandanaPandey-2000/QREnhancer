@@ -31,27 +31,118 @@
 </html> -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>QR Code Image Embedder</title>
+  <meta charset="UTF-8">
+  <title>Embed Image in QR Code</title>
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #cc0066;
+    }
+
+    form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #cc0066;
+    }
+
+    input[type="file"], input[type="text"], input[type="range"] {
+      margin-top: 5px;
+    }
+
+    .preview {
+      max-width: 200px;
+      margin-top: 10px;
+      border: 2px dashed #cc0066;
+      padding: 5px;
+      background-color: #fff0f5;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #cc0066;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #99004d;
+    }
+
+    .slider-label {
+      color: #cc0066;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <h1>Embed an Image into Your QR Code</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label>QR Code Image (PNG/JPG):</label>
-        <input type="file" name="qr" accept="image/*" required><br><br>
+  <h1>Embed Image into QR Code</h1>
+  <form action="/" method="POST" enctype="multipart/form-data">
+    <div>
+      <label for="qr">Upload QR Code:</label><br>
+      <input type="file" name="qr" id="qr" accept="image/*" required onchange="previewImage(this, 'qr-preview')">
+      <br><img id="qr-preview" class="preview" />
+    </div>
 
-        <label>Image to Embed (PNG with transparent background recommended):</label>
-        <input type="file" name="embed" accept="image/*" required><br><br>
+    <div>
+      <label for="embed">Upload Image to Embed:</label><br>
+      <input type="file" name="embed" id="embed" accept="image/*" required onchange="previewImage(this, 'embed-preview')">
+      <br><img id="embed-preview" class="preview" />
+    </div>
 
-        <label>Random Seed (optional):</label>
-        <input type="text" name="seed"><br><br>
+    <div>
+      <label for="blend" class="slider-label">Blend Percentage: <span id="blend-value">30</span>%</label><br>
+      <input type="range" name="blend" id="blend" min="0" max="100" value="30" oninput="updateBlendValue(this.value)">
+    </div>
 
-        <label>Blending Percentage (0?100):</label>
-        <input type="number" name="blend_percent" value="30" min="0" max="100"><br><br>
+    <div>
+      <label for="seed">Seed (optional):</label><br>
+      <input type="text" name="seed" id="seed" placeholder="Enter a seed value">
+    </div>
 
-        <button type="submit">Generate</button>
-    </form>
+    <button type="submit">Generate</button>
+  </form>
+
+  <script>
+    function previewImage(input, previewId) {
+      const preview = document.getElementById(previewId);
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          preview.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateBlendValue(value) {
+      document.getElementById("blend-value").innerText = value;
+    }
+  </script>
 </body>
 </html>
+
 
