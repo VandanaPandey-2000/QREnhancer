@@ -46,7 +46,7 @@ def blend_edges_with_qr(qr_img, embed_img, x, y, module_size, blend_percent):
 
     qr_img[y:y+h, x:x+w] = np.clip(roi, 0, 255).astype(np.uint8)
 
-def embed_image(qr_path, embed_path, output_path, seed='', blend_percent=blend_percent):
+def embed_image(qr_path, embed_path, output_path, seed='', blend_percent):
     qr_img = cv2.imread(qr_path, cv2.IMREAD_COLOR)
     embed_img = cv2.imread(embed_path, cv2.IMREAD_UNCHANGED)
 
