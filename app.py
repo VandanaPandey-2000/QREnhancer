@@ -103,12 +103,18 @@ def index():
         embed_file.save(embed_path)
 
         # cmd = ['./embed', qr_path, embed_path, output_path, str(blend_percent), random_seed]
-        cmd = ['./embed', qr_path, embed_path, output_path, random_seed, str(blend_percent)]    #edited: order changed according to cpp
-        print("DEBUG: Running command:", " ".join(cmd))
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # cmd = ['./embed', qr_path, embed_path, output_path, random_seed, str(blend_percent)]    #edited: order changed according to cpp
+        # print("DEBUG: Running command:", " ".join(cmd))
+        # result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        if result.returncode != 0:
-            return f"Error: {result.stderr.decode()}", 500
+        # if result.returncode != 0:
+        #     return f"Error: {result.stderr.decode()}", 500
+
+        try:
+            embed(qr_path, embed_path, output_path, random_seed, blend_percent)
+        except Exception as e:
+            return f"Error in embedding: {str(e)}", 500
+
 
         return render_template('index.html', image_url='/static/output.png')
 
