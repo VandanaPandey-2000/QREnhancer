@@ -125,12 +125,12 @@
     <button type="submit">Generate</button>
   </form>
 
-    {% if image_url %}
-  <div>
-    <h2>Result:</h2>
-    <img src="{{ image_url }}" alt="Embedded QR code" style="max-width:300px; border:2px solid #cc0066; margin-top:20px;">
-  </div>
-  {% endif %}
+   {% if output_image %}
+      <h2>Generated QR with Embedded Image:</h2>
+      <img src="{{ url_for('static', filename=output_image) }}" alt="Embedded QR" style="max-width: 300px; border: 2px solid #cc0066; margin-top: 20px;">
+      <br>
+      <a href="{{ url_for('static', filename=output_image) }}" download class="download-btn" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #cc0066; color: white; text-decoration: none; border-radius: 6px;">Download</a>
+    {% endif %}
     
   <script>
     function previewImage(input, previewId) {
