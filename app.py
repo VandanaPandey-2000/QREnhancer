@@ -80,11 +80,11 @@ def index():
         qr_file = request.files.get('qr')
         embed_file = request.files.get('embed')
         try:                                        #edited: added try except
-            blend_percent = int(request.form.get('blendpercent', '30'))
+            blend_percent = int(request.form.get('blend', '30'))
         except ValueError:
             blend_percent = 30
         # blend_percent = int(request.form.get('blendpercent', 100))
-        random_seed = request.form.get('randomseed', "")
+        random_seed = request.form.get('seed', "")
 
         print(f"DEBUG: blend_percent={blend_percent}, random_seed='{random_seed}'") #edited: added line
 
