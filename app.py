@@ -61,7 +61,7 @@ def index():
             return f"Error in embedding: {str(e)}", 500
 
         if os.path.exists(output_path):
-            print("Output image exists, ready to display")
+            print("Output image exists, ready to display: {output_path}")
         else:
             print("Output image missing!")
             
