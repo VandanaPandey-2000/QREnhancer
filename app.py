@@ -97,7 +97,7 @@ def index():
 
         qr_path = os.path.join(app.config['UPLOAD_FOLDER'], qr_filename)
         embed_path = os.path.join(app.config['UPLOAD_FOLDER'], embed_filename)
-        output_path = os.path.join(STATIC_FOLDER, 'output.png')
+        output_path = os.path.join(STATIC_FOLDER, 'output1.png')
 
         qr_file.save(qr_path)
         embed_file.save(embed_path)
@@ -122,7 +122,7 @@ def index():
 
 @app.route('/download')
 def download():
-    return send_file('static/output.png', as_attachment=True)
+    return send_file('static/output1.png', as_attachment=True)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # use PORT from env or fallback to 5000
