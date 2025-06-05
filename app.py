@@ -115,7 +115,7 @@ def index():
         except Exception as e:
             return f"Error in embedding: {str(e)}", 500
             
-        return render_template('index.html', image_url='/static/output.png')
+        return render_template('index.html', image_url='/static/output1.png')
 
      # For GET requests, show the form without image
     return render_template('index.html', image_url=None)
