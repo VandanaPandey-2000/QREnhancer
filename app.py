@@ -114,10 +114,10 @@ def index():
             embed_image(qr_path, embed_path, output_path, blend_percent, random_seed)
         except Exception as e:
             return f"Error in embedding: {str(e)}", 500
-
-
+            
         return render_template('index.html', image_url='/static/output.png')
 
+     # For GET requests, show the form without image
     return render_template('index.html', image_url=None)
 
 @app.route('/download')
