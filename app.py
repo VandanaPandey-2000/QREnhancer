@@ -18,7 +18,9 @@ os.makedirs(STATIC_FOLDER, exist_ok=True)
 def index():
     print("DEBUG: Request received, method =", request.method)  
     if request.method == 'POST':
+        print("a")
         qr_file = request.files.get('qr')
+        print("b")
         embed_file = request.files.get('embed')
 
         if not qr_file or not embed_file:
@@ -26,8 +28,10 @@ def index():
              
         try:                                        #edited: added try except
             blend_percent = int(request.form.get('blend', '30'))
+            print("c")
         except ValueError:
             blend_percent = 30
+            print("d")
         # blend_percent = int(request.form.get('blendpercent', 100))
         random_seed = request.form.get('seed', "")
 
@@ -37,24 +41,20 @@ def index():
 
         qr_filename = secure_filename(qr_file.filename)
         embed_filename = secure_filename(embed_file.filename)
+        print("f")
 
         qr_path = os.path.join(app.config['UPLOAD_FOLDER'], qr_filename)
         embed_path = os.path.join(app.config['UPLOAD_FOLDER'], embed_filename)
         output_path = os.path.join(STATIC_FOLDER, 'output1.png')
+        print("g")
 
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
         os.makedirs(STATIC_FOLDER, exist_ok=True)
+        print("h")
 
         qr_file.save(qr_path)
         embed_file.save(embed_path)
-
-        # cmd = ['./embed', qr_path, embed_path, output_path, str(blend_percent), random_seed]
-        # cmd = ['./embed', qr_path, embed_path, output_path, random_seed, str(blend_percent)]    #edited: order changed according to cpp
-        # print("DEBUG: Running command:", " ".join(cmd))
-        # result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-        # if result.returncode != 0:
-        #     return f"Error: {result.stderr.decode()}", 500
+        print("i")
 
         try:
             print(f"Calling embed_image with: {qr_path}, {embed_path}, {output_path}, {blend_percent}, {random_seed}")
@@ -70,13 +70,16 @@ def index():
             print("Output image missing!")
             
         return render_template('index.html', image_url='/static/output1.png')
+        print("j")
 
      # For GET requests, show the form without image
     return render_template('index.html', image_url=None)
+    print("k")
 
 @app.route('/download')
 def download():
     return send_file('static/output1.png', as_attachment=True)
+    
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # use PORT from env or fallback to 5000
