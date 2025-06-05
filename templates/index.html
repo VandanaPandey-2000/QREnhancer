@@ -150,6 +150,14 @@
       document.getElementById("blend-value").innerText = value;
     }
   </script>
+  <script>
+// Clear on hard refresh
+if (performance.navigation.type === 1) {
+    document.getElementById('qr-image')?.remove();
+    // Optional: Clear the image URL from history
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+</script>
 </body>
 </html>
 
