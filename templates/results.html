@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head><title>Result</title></head>
+<head>
+    <title>Embedded QR Code</title>
+</head>
 <body>
-  <h2>Enhanced QR Code</h2>
-  <img src="{{ url_for('static', filename=result_image.split('static/')[-1]) }}" alt="Modified QR"><br><br>
-  <a href="{{ url_for('static', filename=result_image.split('static/')[-1]) }}" download>Download Modified QR</a>
+    <h1>Resulting QR Code</h1>
+    <img src="{{ output_image }}" alt="Embedded QR Code" style="max-width: 400px;"><br><br>
+    <a href="{{ url_for('download') }}">Download Image</a>
+    <br><br>
+    <a href="{{ url_for('index') }}">Embed Another</a>
 </body>
 </html>
