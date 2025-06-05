@@ -1,66 +1,3 @@
-# from flask import Flask, request, render_template, send_file
-# import os
-# import subprocess
-# import uuid
-
-# app = Flask(__name__)
-
-# UPLOAD_FOLDER = 'static'
-# MAX_FILE_SIZE_MB = 2
-
-# def is_file_size_valid(filepath, max_mb):
-#     return os.path.getsize(filepath) <= max_mb * 1024 * 1024
-
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     result_path = os.path.join(UPLOAD_FOLDER, 'output.png')
-
-#     if request.method == 'POST':
-#         qr_file = request.files['qr']
-#         embed_file = request.files['image']
-#         seed = request.form.get('seed', '')
-
-#         # Save uploaded files temporarily
-#         qr_path = os.path.join(UPLOAD_FOLDER, f'qr_{uuid.uuid4().hex}.png')
-#         embed_path = os.path.join(UPLOAD_FOLDER, f'img_{uuid.uuid4().hex}.png')
-
-#         qr_file.save(qr_path)
-#         embed_file.save(embed_path)
-
-#         # Check file size limits
-#         if not is_file_size_valid(qr_path, MAX_FILE_SIZE_MB):
-#             os.remove(qr_path)
-#             os.remove(embed_path)
-#             return "QR code image is too large (limit 2 MB)."
-
-#         if not is_file_size_valid(embed_path, MAX_FILE_SIZE_MB):
-#             os.remove(qr_path)
-#             os.remove(embed_path)
-#             return "Embed image is too large (limit 2 MB)."
-
-#         # Run the C++ binary
-#         try:
-#             subprocess.run(["./embed", qr_path, embed_path, result_path, seed], check=True)
-#         except subprocess.CalledProcessError as e:
-#             return f"Error in embedding: {e}"
-#         finally:
-#             # Clean up uploaded files
-#             os.remove(qr_path)
-#             os.remove(embed_path)
-
-#         return render_template('index.html', result='output.png')
-
-#     return render_template('index.html')
-    
-
-# @app.route('/download')
-# def download():
-#     path = os.path.join(UPLOAD_FOLDER, 'output.png')
-#     return send_file(path, as_attachment=True)
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
 from flask import Flask, render_template, request, send_file
 import os
 import subprocess
@@ -80,6 +17,10 @@ def index():
     if request.method == 'POST':
         qr_file = request.files.get('qr')
         embed_file = request.files.get('embed')
+
+         if not qr_file or not embed_file:
+            return "Both QR and image to embed are required", 400
+             
         try:                                        #edited: added try except
             blend_percent = int(request.form.get('blend', '30'))
         except ValueError:
@@ -89,8 +30,7 @@ def index():
 
         print(f"DEBUG: blend_percent={blend_percent}, random_seed='{random_seed}'") #edited: added line
 
-        if not qr_file or not embed_file:
-            return "Both QR and image to embed are required", 400
+       
 
         qr_filename = secure_filename(qr_file.filename)
         embed_filename = secure_filename(embed_file.filename)
@@ -98,6 +38,9 @@ def index():
         qr_path = os.path.join(app.config['UPLOAD_FOLDER'], qr_filename)
         embed_path = os.path.join(app.config['UPLOAD_FOLDER'], embed_filename)
         output_path = os.path.join(STATIC_FOLDER, 'output1.png')
+
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        os.makedirs(STATIC_FOLDER, exist_ok=True)
 
         qr_file.save(qr_path)
         embed_file.save(embed_path)
@@ -112,8 +55,15 @@ def index():
 
         try:
             embed_image(qr_path, embed_path, output_path, blend_percent, random_seed)
+            print(f"Embedding succeeded, output at: {output_path}")
         except Exception as e:
+            print(f"Embedding failed: {e}")
             return f"Error in embedding: {str(e)}", 500
+
+        if os.path.exists(output_path):
+            print("Output image exists, ready to display")
+        else:
+            print("Output image missing!")
             
         return render_template('index.html', image_url='/static/output1.png')
 
