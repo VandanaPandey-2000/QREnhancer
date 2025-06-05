@@ -125,6 +125,13 @@
     <button type="submit">Generate</button>
   </form>
 
+    {% if image_url %}
+  <div>
+    <h2>Result:</h2>
+    <img src="{{ image_url }}" alt="Embedded QR code" style="max-width:300px; border:2px solid #cc0066; margin-top:20px;">
+  </div>
+  {% endif %}
+    
   <script>
     function previewImage(input, previewId) {
       const preview = document.getElementById(previewId);
