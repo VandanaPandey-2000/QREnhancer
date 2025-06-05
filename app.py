@@ -57,6 +57,7 @@ def index():
         #     return f"Error: {result.stderr.decode()}", 500
 
         try:
+            print(f"Calling embed_image with: {qr_path}, {embed_path}, {output_path}, {blend_percent}, {random_seed}")
             embed_image(qr_path, embed_path, output_path, blend_percent, random_seed)
             print(f"Embedding succeeded, output at: {output_path}")
         except Exception as e:
