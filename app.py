@@ -16,6 +16,7 @@ os.makedirs(STATIC_FOLDER, exist_ok=True)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    print("DEBUG: Request received, method =", request.method)  
     if request.method == 'POST':
         qr_file = request.files.get('qr')
         embed_file = request.files.get('embed')
