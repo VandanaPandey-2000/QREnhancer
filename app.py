@@ -111,7 +111,7 @@ def index():
         #     return f"Error: {result.stderr.decode()}", 500
 
         try:
-            embed(qr_path, embed_path, output_path, random_seed, blend_percent)
+            embed_image(qr_path, embed_path, output_path, blend_percent, random_seed)
         except Exception as e:
             return f"Error in embedding: {str(e)}", 500
 
