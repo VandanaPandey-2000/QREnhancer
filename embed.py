@@ -109,8 +109,9 @@ def is_safe_zone(qr_img, x, y, w, h, module_size):
 
 def blend_edges_with_qr(qr_img, embed_img, x, y, module_size, blend_percent):
     border_width = module_size * 2
-    scale_alpha = max(0, min(100, blend_percent)) / 100.0  # C++-style clamping
-
+    # scale_alpha = max(0, min(100, blend_percent)) / 100.0  # C++-style clamping
+    scale_alpha = np.clip(blend_percent / 100.0, 0.0, 1.0)
+    
     # C++-style color sampling
     top_color = np.mean(qr_img[max(0,y-1):y, x:x+embed_img.shape[1]], axis=(0,1))
     bottom_color = np.mean(qr_img[min(qr_img.shape[0]-1,y+embed_img.shape[0]):y+embed_img.shape[0]+1, x:x+embed_img.shape[1]], axis=(0,1))
