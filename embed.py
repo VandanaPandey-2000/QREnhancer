@@ -91,7 +91,7 @@ def embed_image(qr_path, embed_path, output_path, blend_percent, seed=''):
     module_size = max(1, qr_img.shape[1] / 21)  # Match C++ integer division
 
     # Calculate safe embed size based on EC level
-    qr_size = min(qr_img.shape[:2]
+    qr_size = min(qr_img.shape[:2])
     max_dim = calculate_max_embed_size(qr_size, ec_level)
                   
     # max_dim = min(qr_img.shape[:2]) // 3
