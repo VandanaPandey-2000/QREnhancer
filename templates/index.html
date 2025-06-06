@@ -123,13 +123,14 @@
 
   {% if image_url %}
     <div class="result-image">
-        <img src="{{ image_url }}" alt="Processed Image">
-<!--         <a href="{{ image_url }}" download>Download Image</a> -->
-         <form action="/download/{{ output_filename }}" method="get">
+        <img src="{{ image_url }}" alt="Processed Image" style="max-width: {{ display_width }}px; 
+                    max-height: {{ display_height }}px; width: auto; height: auto;">
+        <a href="{{ image_url }}" download>Download Image</a>
+<!--          <form action="/download/{{ output_filename }}" method="get">
           <button type="submit" class="download-button">
             <i class="fas fa-download"></i> Download QR Code
           </button>
-    </form>
+    </form> -->
     </div>
   {% endif %}
     
