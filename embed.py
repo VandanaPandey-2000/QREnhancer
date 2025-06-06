@@ -1,28 +1,28 @@
 import cv2
 import numpy as np
 import random
-from pyzbar.pyzbar import decode, ZBarSymbol  # Add this import
+# from pyzbar.pyzbar import decode, ZBarSymbol  # Add this import
 
-def get_qr_ec_level(qr_path):
-    # """Detect QR code error correction level"""
-    try:
-        decoded = decode(cv2.imread(qr_path), symbols=[ZBarSymbol.QRCODE])
-        if decoded:
-            # EC levels: L=0, M=1, Q=2, H=3
-            return decoded[0].quality
-        return 1  # Default to M if detection fails
-    except:
-        return 1  # Default to M if library fails
+# def get_qr_ec_level(qr_path):
+#     # """Detect QR code error correction level"""
+#     try:
+#         decoded = decode(cv2.imread(qr_path), symbols=[ZBarSymbol.QRCODE])
+#         if decoded:
+#             # EC levels: L=0, M=1, Q=2, H=3
+#             return decoded[0].quality
+#         return 1  # Default to M if detection fails
+#     except:
+#         return 1  # Default to M if library fails
 
-def calculate_max_embed_size(qr_size, ec_level):
-    # """Calculate safe embed size based on error correction"""
-    total_modules = qr_size ** 2
-    if ec_level == 0:    # L-level (7%)
-        return int(np.sqrt(0.07 * total_modules))
-    elif ec_level == 1:  # M-level (15%)
-        return int(np.sqrt(0.15 * total_modules))
-    else:                # Q/H levels (25-30%)
-        return qr_size // 3  # Original behavior
+# def calculate_max_embed_size(qr_size, ec_level):
+#     # """Calculate safe embed size based on error correction"""
+#     total_modules = qr_size ** 2
+#     if ec_level == 0:    # L-level (7%)
+#         return int(np.sqrt(0.07 * total_modules))
+#     elif ec_level == 1:  # M-level (15%)
+#         return int(np.sqrt(0.15 * total_modules))
+#     else:                # Q/H levels (25-30%)
+#         return qr_size // 3  # Original behavior
 
 def is_safe_zone(qr_img, x, y, w, h, module_size):
     finder_size = 7 * module_size
@@ -82,7 +82,7 @@ def blend_edges_with_qr(qr_img, embed_img, x, y, module_size, blend_percent):
 def embed_image(qr_path, embed_path, output_path, blend_percent, seed=''):
     qr_img = cv2.imread(qr_path, cv2.IMREAD_COLOR)
     embed_img = cv2.imread(embed_path, cv2.IMREAD_UNCHANGED)
-    ec_level = get_qr_ec_level(qr_path) #added 
+    # ec_level = get_qr_ec_level(qr_path) #added 
     
     if qr_img is None or embed_img is None:
         print("Failed to read input images.")
@@ -90,11 +90,11 @@ def embed_image(qr_path, embed_path, output_path, blend_percent, seed=''):
 
     module_size = max(1, qr_img.shape[1] / 21)  # Match C++ integer division
 
-    # Calculate safe embed size based on EC level
-    qr_size = min(qr_img.shape[:2])
-    max_dim = calculate_max_embed_size(qr_size, ec_level)
+    # # Calculate safe embed size based on EC level
+    # qr_size = min(qr_img.shape[:2])
+    # max_dim = calculate_max_embed_size(qr_size, ec_level)
                   
-    # max_dim = min(qr_img.shape[:2]) // 3
+    max_dim = min(qr_img.shape[:2]) // 3
     h, w = embed_img.shape[:2]
     scale = min(max_dim / h, max_dim / w, 1.0)
     embed_img = cv2.resize(embed_img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
