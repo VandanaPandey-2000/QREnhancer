@@ -1,3 +1,4 @@
 Flask
+pyzbar
 Werkzeug
 opencv-python-headless
