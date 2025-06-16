@@ -7,12 +7,14 @@ from embed import embed_image
 app = Flask(__name__)
 # UPLOAD_FOLDER = 'uploads'
 # STATIC_FOLDER = 'static'
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+UPLOAD_FOLDER = '/tmp/uploads'
+# UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 STATIC_FOLDER = os.path.join(os.getcwd(), 'static')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(STATIC_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
