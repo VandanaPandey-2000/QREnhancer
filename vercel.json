@@ -2,12 +2,12 @@
   "version": 2,
   "builds": [
     {
+      "src": "build.sh",
+      "use": "@vercel/build-script"
+    },
+    {
       "src": "app.py",
-      "use": "@vercel/python",
-      "config": { 
-        "maxLambdaSize": "15mb",
-        "installCommand": "bash build.sh"
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
